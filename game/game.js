@@ -1,8 +1,13 @@
-function createPlayer(name){
-    return Object
+function createPlayer(name="AI"){
+    return {
+        name,
+        hand:[],
+        wonPile:[]
+    }
 } 
 
-function  initGame(){
+
+function initGame(){
     return Object
 } 
 
