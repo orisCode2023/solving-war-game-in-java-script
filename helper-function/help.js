@@ -33,3 +33,8 @@ export const converNumerTochar = number =>{
     }
     return number
 }
+
+export const deal = (deck, p1, p2) => {
+    p1.push(deck.slice(0, deck.length / 2))
+    p2.push(deck.slice(deck.length / 2))
+}
