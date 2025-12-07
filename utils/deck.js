@@ -1,4 +1,4 @@
-import { converNumerTochar, convertCharToNumber } from "../helper function/help.js"
+import { converNumerTochar, convertCharToNumber } from "../helper-function/help.js"
 
 function createCard(rank, suite) {
     return {
@@ -29,7 +29,15 @@ function createDeck() {
     return deck
 }
 
-
 function shuffle(deck) {
-    return [Object]
+    let shuffleTimes = 1000
+    while(shuffleTimes > 0){
+        let num1 = Math.floor(Math.random() * deck.length);
+        let num2 = Math.floor(Math.random() * deck.length);
+        if (num1 !== num2){
+            [deck[num1], deck[num2]] = [deck[num2], deck[num1]]
+            shuffleTimes--    
+        }
+    }
+    return deck
 }
