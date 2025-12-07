@@ -1,13 +1,20 @@
-function createCard(rank=String, suite=String){
-    return 
+import { convertCharToNumber } from "../helper function/help.js"
+
+function createCard(rank, suite){
+    return {
+        rank,
+        suite,
+        value: Number(convertCharToNumber(rank))
+    }
 }
-function compareCards(p1Card=Object, p2Card=Object ){
+
+function compareCards(p1Card, p2Card){
     return 
 }
 function createDeck(){
     return [Object]
 }
 
-function shuffle(deck=[Object]){
+function shuffle(deck){
     return [Object]
 }
