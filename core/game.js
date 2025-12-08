@@ -26,11 +26,15 @@ export function initGame() {
     }
 }
 
-// function checkResult(result, p1, p2, card1, card2) {
-//     if (result === "p1") {
-//         playerWin(p1.wonPile, card1, card2)
-//     } else if (result === "p2") {
-//         playerWin(p2.wonPile, card1, card2)
+function checkResult(result, p1, p2, card1, card2) {
+    if (result === "p1") {
+        playerWin(p1.wonPile, card1, card2)
+        console.log(p1.wonPile)
+    } else if (result === "p2") {
+        playerWin(p2.wonPile, card1, card2)
+        console.log(p1.wonPile)
+    }
+}
 //     } else {
 //         war(p1, p2, card1, card2)
 //     }
@@ -76,7 +80,7 @@ function playRound(p1, p2) {
     console.log(`${p2.name} card is: ${p2Card.value} `)
     let resultRound = deck.compareCards(p1Card, p2Card)
     console.log(resultRound)
-    // checkResult(resultRound, p1, p2, card1, card2)
+    checkResult(resultRound, p1, p2, p1Card, p2Card)
 }
 const game = initGame()
 playRound(game.player_1, game.player_2)
