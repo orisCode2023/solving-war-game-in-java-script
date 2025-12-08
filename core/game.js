@@ -32,7 +32,7 @@ function checkResult(result, p1, p2, card1, card2) {
         console.log(p1.wonPile)
     } else if (result === "p2") {
         playerWin(p2.wonPile, card1, card2)
-        console.log(p1.wonPile)
+        console.log(p2.wonPile)
     }
 }
 //     } else {
