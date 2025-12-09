@@ -8,11 +8,11 @@ function createCard(rank, suite) {
     }
 }
 
-function compareCards(p1Card, p2Card) {
+function compareCards(p1Card, p2Card, playersObject) {
     if (p1Card.value > p2Card.value) {
-        return "p1"
+        return playersObject.player1
     } else if (p1Card.value < p2Card.value) {
-        return "p2"
+        return playersObject.player2
     } else {
         return "WAR"
     }
