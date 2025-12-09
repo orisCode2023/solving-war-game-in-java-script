@@ -45,20 +45,25 @@ function war(playersObject, card1, card2) {
     p1WarPile.push(card1)
     p2WarPile.push(card2)
     while (counter <= 3) {
-        if (p1.hand){
-            card1 = p1.hand.pop()
+        if (playersObject.player1.hand) {
+            card1 = playersObject.player1.hand.pop()
+            console.log(`${playersObject.player1.name} card is: ${card1.rank} `)
             p1WarPile.push(card1)
-        } 
-        if (p2.hand){
-            card2 = p2.hand.pop()
+        }
+        if (playersObject.player2.hand) {
+            card2 = playersObject.player2.hand.pop()
+            console.log(`${playersObject.player2.name} card is: ${card2.rank} `)
             p2WarPile.push(card2)
         }
         counter++
-        const resultRound = deck.compareCards(card1, card2)
-        if (counter === 3 && resultRound === "WAR") {
-            counter = 0
-        } else {
-            checkResult(resultRound, card1, card2, playersObject)
+        const result = deck.compareCards(card1, card2, playersObject)
+        if (counter === 3) {
+            if (result === "WAR") {
+                counter = 0
+            } else {
+                checkResult(result, card1, card2, playersObject)
+            }
+
         }
     }
 }
