@@ -29,41 +29,41 @@ export function initGame() {
 function checkResult(result, p1, p2, card1, card2) {
     if (result === "p1") {
         playerWin(p1.wonPile, card1, card2)
+        console.log(`${p1.name}'s won pile is:`)
         console.log(p1.wonPile)
     } else if (result === "p2") {
         playerWin(p2.wonPile, card1, card2)
+        console.log(`${p2.name}'s won pile is:`)
         console.log(p2.wonPile)
+    } else {
+        war(p1, p2, card1, card2)
     }
 }
-//     } else {
-//         war(p1, p2, card1, card2)
-//     }
-// }
 
-// function war(p1, p2, card1, card2) {
-//     let counter = 0
-//     const p1WarPile = []
-//     const p2WarPile = []
-//     p1WarPile.push(card1)
-//     p2WarPile.push(card2)
-//     while (counter <= 3) {
-//         if (p1.hand){
-//             card1 = p1.hand.pop()
-//             p1WarPile.push(card1)
-//         } 
-//         if (p2.hand){
-//             card2 = p2.hand.pop()
-//             p2WarPile.push(card2)
-//         }
-//         counter++
-//         const resultRound = deck.compareCards(card1, card2)
-//         if (counter === 3 && resultRound === "WAR") {
-//             counter = 0
-//         } else {
-//             checkResult(resultRound, p1, p2, card1, card2)
-//         }
-//     }
-// }
+function war(p1, p2, card1, card2) {
+    let counter = 0
+    const p1WarPile = []
+    const p2WarPile = []
+    p1WarPile.push(card1)
+    p2WarPile.push(card2)
+    while (counter <= 3) {
+        if (p1.hand){
+            card1 = p1.hand.pop()
+            p1WarPile.push(card1)
+        } 
+        if (p2.hand){
+            card2 = p2.hand.pop()
+            p2WarPile.push(card2)
+        }
+        counter++
+        const resultRound = deck.compareCards(card1, card2)
+        if (counter === 3 && resultRound === "WAR") {
+            counter = 0
+        } else {
+            checkResult(resultRound, p1, p2, card1, card2)
+        }
+    }
+}
 
 
 
@@ -76,8 +76,8 @@ function playRound(p1, p2) {
     if (p2.hand){
         p2Card = p2.hand.pop()
     }
-    console.log(`${p1.name} card is: ${p1Card.value} `)
-    console.log(`${p2.name} card is: ${p2Card.value} `)
+    console.log(`${p1.name} card is: ${p1Card.rank} `)
+    console.log(`${p2.name} card is: ${p2Card.rank} `)
     let resultRound = deck.compareCards(p1Card, p2Card)
     console.log(resultRound)
     checkResult(resultRound, p1, p2, p1Card, p2Card)
