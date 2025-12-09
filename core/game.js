@@ -3,8 +3,6 @@ import deck from "../utils/deck.js"
 // import input from "analiza-sync"
 
 
-
-
 function createPlayer(name = "AI") {
     return {
         name,
@@ -27,10 +25,10 @@ export function initGame() {
     }
 }
 
-function checkResult(result, card1, card2, playersObject, arr) {
+function checkResult(result, pile, card1, card2, playersObject,) {
     if (typeof result === "object") {
         console.log(`${result.name}'s card is higher `)
-        playerWin(result, card1, card2, arr)
+        playerWin(result, pile,  card1, card2)
         console.log(`${result.name}'s won pile is:`)
         console.log(result.wonPile)
     } else {
@@ -63,19 +61,18 @@ function war(playersObject, card1, card2) {
         if (counter === 3) {
             const result = deck.compareCards(card1, card2, playersObject)
             if (result === "WAR") {
+                console.log("WAR AGAIN")
                 counter = 0
             } else {
-                checkResult(result, card1, card2, playersObject, result.warPile)
+                checkResult(result, "warPile", card1, card2, playersObject)
                 result.wonPile.push(...playersObject.player1.warPile, ...playersObject.player2.warPile)
+                console.log(`${result.name}'s war pile is: `)
                 console.log(result.wonPile)
             }   
         }
         counter++
     }
 }
-
-
-
 
 function playRound(playersObject) {
     let card1;
@@ -89,11 +86,10 @@ function playRound(playersObject) {
     console.log(`${playersObject.player1.name} card is: ${card1.rank} `)
     console.log(`${playersObject.player2.name} card is: ${card2.rank} `)
     const result = deck.compareCards(card1, card2, playersObject)
-    checkResult(result, card1, card2, playersObject, result.wonPile)
+    checkResult(result, "wonPile", card1, card2, playersObject)
 }
 const game = initGame()
 playRound(game)
-
 
 // export function gameLoop() {
 //     while (isNotEmty(p1.hand, p1.wonPile) || isNotEmty(p2.hand, p2.wonPile)) {
