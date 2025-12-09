@@ -1,10 +1,10 @@
-import { objSuites } from "../helper-function/help.js"
+import { convertCharToNumber, converNumerToChar } from "../helper-function/help.js"
 
 function createCard(rank, suite) {
     return {
         rank,
         suite,
-        value: Number.isNaN(objSuites[rank]) ? objSuites.keys()[rank] : objSuites[rank]
+        value: Number(convertCharToNumber(rank))
     }
 }
 
@@ -23,7 +23,7 @@ function createDeck() {
     const deck = []
     for (let i = 0; i < suitsDeck.length; i++) {
         for (let j = 2; j <= 14; j++) {
-            deck.push(createCard(j, suitsDeck[i]))
+            deck.push(createCard(converNumerToChar(j), suitsDeck[i]))
         }
     }
     return deck
