@@ -9,7 +9,8 @@ function createPlayer(name = "AI") {
     return {
         name,
         hand: [],
-        wonPile: []
+        wonPile: [],
+        warPile: []
     }
 }
 export function initGame() {
@@ -26,10 +27,10 @@ export function initGame() {
     }
 }
 
-function checkResult(result, card1, card2, playersObject) {
+function checkResult(result, card1, card2, playersObject, arr) {
     if (typeof result === "object") {
         console.log(`${result.name}'s card is higher `)
-        playerWin(result.wonPile, card1, card2)
+        playerWin(result, card1, card2, arr)
         console.log(`${result.name}'s won pile is:`)
         console.log(result.wonPile)
     } else {
@@ -38,33 +39,38 @@ function checkResult(result, card1, card2, playersObject) {
     }
 }
 
+// function getCardWar(player){
+//     if (player.hand){
+//         const card = player.hand.pop() // card needs to be an object
+//         console.log(`${player.name} card is: ${card.rank} `)
+//         return card
+//     }
+// }
+
 function war(playersObject, card1, card2) {
     let counter = 0
-    const p1WarPile = []
-    const p2WarPile = []
-    p1WarPile.push(card1)
-    p2WarPile.push(card2)
     while (counter <= 3) {
+        playersObject.player1.warPile.push(card1)
+        playersObject.player2.warPile.push(card2)
         if (playersObject.player1.hand) {
             card1 = playersObject.player1.hand.pop()
-            console.log(`${playersObject.player1.name} card is: ${card1.rank} `)
-            p1WarPile.push(card1)
+            console.log(`${playersObject.player1.name} card on ${counter} round is: ${card1.rank} `)
         }
         if (playersObject.player2.hand) {
             card2 = playersObject.player2.hand.pop()
-            console.log(`${playersObject.player2.name} card is: ${card2.rank} `)
-            p2WarPile.push(card2)
+            console.log(`${playersObject.player2.name} card on ${counter} round is: ${card2.rank} `)
         }
-        counter++
-        const result = deck.compareCards(card1, card2, playersObject)
         if (counter === 3) {
+            const result = deck.compareCards(card1, card2, playersObject)
             if (result === "WAR") {
                 counter = 0
             } else {
-                checkResult(result, card1, card2, playersObject)
-            }
-
+                checkResult(result, card1, card2, playersObject, result.warPile)
+                result.wonPile.push(...playersObject.player1.warPile, ...playersObject.player2.warPile)
+                console.log(result.wonPile)
+            }   
         }
+        counter++
     }
 }
 
@@ -83,7 +89,7 @@ function playRound(playersObject) {
     console.log(`${playersObject.player1.name} card is: ${card1.rank} `)
     console.log(`${playersObject.player2.name} card is: ${card2.rank} `)
     const result = deck.compareCards(card1, card2, playersObject)
-    checkResult(result, card1, card2, playersObject)
+    checkResult(result, card1, card2, playersObject, result.wonPile)
 }
 const game = initGame()
 playRound(game)
