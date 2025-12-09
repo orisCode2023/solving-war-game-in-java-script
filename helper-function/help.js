@@ -39,8 +39,8 @@ export const deal = (deck, p1, p2) => {
     p2.push(...deck.slice(deck.length / 2))
 }
 
-export const playerWin = (player, card1, card2) => {
-    player.push(card1, card2)
+export const playerWin = (player, card1, card2, arr) => {
+    player.arr.push(card1, card2)
 }
 
 export const isNotEmty = (hand, pile) => hand.length > 0 && pile.hand > 0
