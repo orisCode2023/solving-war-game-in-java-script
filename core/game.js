@@ -21,26 +21,24 @@ export function initGame() {
     deal(gameDeck, p1.hand, p2.hand)
     return {
         deck: gameDeck,
-        player_1: p1,
-        player_2: p2
+        player1: p1,
+        player2: p2
     }
 }
 
-function checkResult(result, p1, p2, card1, card2) {
-    if (result === "p1") {
-        playerWin(p1.wonPile, card1, card2)
-        console.log(`${p1.name}'s won pile is:`)
-        console.log(p1.wonPile)
-    } else if (result === "p2") {
-        playerWin(p2.wonPile, card1, card2)
-        console.log(`${p2.name}'s won pile is:`)
-        console.log(p2.wonPile)
+function checkResult(result, card1, card2, playersObject) {
+    if (typeof result === "object") {
+        console.log(`${result.name}'s card is higher `)
+        playerWin(result.wonPile, card1, card2)
+        console.log(`${result.name}'s won pile is:`)
+        console.log(result.wonPile)
     } else {
-        war(p1, p2, card1, card2)
+        console.log(result)
+        war(playersObject, card1, card2)
     }
 }
 
-function war(p1, p2, card1, card2) {
+function war(playersObject, card1, card2) {
     let counter = 0
     const p1WarPile = []
     const p2WarPile = []
@@ -60,30 +58,30 @@ function war(p1, p2, card1, card2) {
         if (counter === 3 && resultRound === "WAR") {
             counter = 0
         } else {
-            checkResult(resultRound, p1, p2, card1, card2)
+            checkResult(resultRound, card1, card2, playersObject)
         }
     }
 }
 
 
 
-function playRound(p1, p2) {
-    let p1Card;
-    let p2Card;
-    if (p1.hand){
-        p1Card = p1.hand.pop()
+
+function playRound(playersObject) {
+    let card1;
+    let card2;
+    if (playersObject.player1.hand) {
+        card1 = playersObject.player1.hand.pop()
     }
-    if (p2.hand){
-        p2Card = p2.hand.pop()
+    if (playersObject.player2.hand) {
+        card2 = playersObject.player2.hand.pop()
     }
-    console.log(`${p1.name} card is: ${p1Card.rank} `)
-    console.log(`${p2.name} card is: ${p2Card.rank} `)
-    let resultRound = deck.compareCards(p1Card, p2Card)
-    console.log(resultRound)
-    checkResult(resultRound, p1, p2, p1Card, p2Card)
+    console.log(`${playersObject.player1.name} card is: ${card1.rank} `)
+    console.log(`${playersObject.player2.name} card is: ${card2.rank} `)
+    const result = deck.compareCards(card1, card2, playersObject)
+    checkResult(result, card1, card2, playersObject)
 }
 const game = initGame()
-playRound(game.player_1, game.player_2)
+playRound(game)
 
 
 // export function gameLoop() {
