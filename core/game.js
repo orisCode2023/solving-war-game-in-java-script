@@ -1,4 +1,4 @@
-import { deal, isNotEmty, playerWin } from "../helper-function/help.js"
+import { deal, isNotEmpty, playerWin } from "../helper-function/help.js"
 import deck from "../utils/deck.js"
 // import input from "analiza-sync"
 
@@ -80,15 +80,17 @@ function playRound(playersObject) {
     const result = deck.compareCards(card1, card2, playersObject)
     checkResult(result, "wonPile", card1, card2, playersObject)
 }
-const game = initGame()
 
+export function gameLoop() {
+    const playersObject = initGame()
+    while (isNotEmpty(playersObject.player1.hand, playersObject.player1.wonPile) && isNotEmpty(playersObject.player2.hand, playersObject.player2.wonPile)) {
+        playRound(playersObject)
 
-// export function gameLoop(game) {
-//     while (isNotEmty(p1.hand, p1.wonPile) || isNotEmty(p2.hand, p2.wonPile)) {
-//         playRound(game)
-//     }
-// }
+    }
+    
+    
+}
  
 
-
+gameLoop()
 // TODO:  needs to fix extra insertion when double war happend
