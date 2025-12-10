@@ -43,5 +43,5 @@ export const playerWin = (player, pile, card1, card2) => {
     player[pile].push(card1, card2)
 }
 
-export const isNotEmty = (hand, pile) => hand.length > 0 && pile.hand > 0
+export const isNotEmpty = (hand, pile) => hand.length > 0 && pile.hand > 0
 export const reFillPile = (player) => player.hand.push(...player.wonPile)
