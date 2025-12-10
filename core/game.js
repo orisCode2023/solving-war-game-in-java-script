@@ -29,8 +29,10 @@ function checkResult(result, pile, card1, card2, playersObject,) {
     if (typeof result === "object") {
         console.log(`${result.name}'s card is higher `)
         playerWin(result, pile,  card1, card2)
-        console.log(`${result.name}'s won pile is:`)
-        console.log(result.wonPile)
+        if (result.warPile.length === 0){
+            console.log(`${result.name}'s won pile is:`)
+            console.log(result.wonPile)
+        }
     } else {
         console.log(result)
         war(playersObject, card1, card2)
@@ -46,8 +48,9 @@ function checkResult(result, pile, card1, card2, playersObject,) {
 // }
 
 function war(playersObject, card1, card2) {
-    let counter = 0
-    while (counter <= 3) {
+    let counter = 1
+    const warLoopNumber = 4
+    while (counter <= warLoopNumber) {
         playersObject.player1.warPile.push(card1)
         playersObject.player2.warPile.push(card2)
         if (playersObject.player1.hand) {
@@ -58,11 +61,11 @@ function war(playersObject, card1, card2) {
             card2 = playersObject.player2.hand.pop()
             console.log(`${playersObject.player2.name} card on ${counter} round is: ${card2.rank} `)
         }
-        if (counter === 3) {
+        if (counter === warLoopNumber) {
             const result = deck.compareCards(card1, card2, playersObject)
             if (result === "WAR") {
                 console.log("WAR AGAIN")
-                counter = 0
+                counter = 1
             } else {
                 checkResult(result, "warPile", card1, card2, playersObject)
                 result.wonPile.push(...playersObject.player1.warPile, ...playersObject.player2.warPile)
