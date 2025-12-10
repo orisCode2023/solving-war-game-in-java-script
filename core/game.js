@@ -39,13 +39,13 @@ function checkResult(result, pile, card1, card2, playersObject,) {
     }
 }
 
-// function getCardWar(player){
-//     if (player.hand){
-//         const card = player.hand.pop() // card needs to be an object
-//         console.log(`${player.name} card is: ${card.rank} `)
-//         return card
-//     }
-// }
+function getCard(player){
+    if (player.hand){
+        const card = player.hand.pop()
+        console.log(`${player.name} card is: ${card.rank} `)
+        return card
+    }
+}
 
 function war(playersObject, card1, card2) {
     let counter = 1
@@ -53,23 +53,20 @@ function war(playersObject, card1, card2) {
     while (counter <= warLoopNumber) {
         playersObject.player1.warPile.push(card1)
         playersObject.player2.warPile.push(card2)
-        if (playersObject.player1.hand) {
-            card1 = playersObject.player1.hand.pop()
-            console.log(`${playersObject.player1.name} card on ${counter} round is: ${card1.rank} `)
-        }
-        if (playersObject.player2.hand) {
-            card2 = playersObject.player2.hand.pop()
-            console.log(`${playersObject.player2.name} card on ${counter} round is: ${card2.rank} `)
-        }
+        card1 = getCard(playersObject.player1)
+        card2 = getCard(playersObject.player2)
+        
         if (counter === warLoopNumber) {
             const result = deck.compareCards(card1, card2, playersObject)
             if (result === "WAR") {
                 console.log("WAR AGAIN")
-                counter = 1
+                counter = 0
             } else {
                 checkResult(result, "warPile", card1, card2, playersObject)
-                result.wonPile.push(...playersObject.player1.warPile, ...playersObject.player2.warPile)
-                console.log(`${result.name}'s war pile is: `)
+                const loserPile = Object.values(playersObject).find((player) => player.name !== result.name && !Array.isArray(player));
+                result.warPile.push(...loserPile.warPile)
+                result.wonPile.push(...result.warPile)
+                console.log(`${result.name}'s win pile is: `)
                 console.log(result.wonPile)
             }   
         }
@@ -78,24 +75,20 @@ function war(playersObject, card1, card2) {
 }
 
 function playRound(playersObject) {
-    let card1;
-    let card2;
-    if (playersObject.player1.hand) {
-        card1 = playersObject.player1.hand.pop()
-    }
-    if (playersObject.player2.hand) {
-        card2 = playersObject.player2.hand.pop()
-    }
-    console.log(`${playersObject.player1.name} card is: ${card1.rank} `)
-    console.log(`${playersObject.player2.name} card is: ${card2.rank} `)
+    const card1 = getCard(playersObject.player1)
+    const card2 = getCard(playersObject.player2)
     const result = deck.compareCards(card1, card2, playersObject)
     checkResult(result, "wonPile", card1, card2, playersObject)
 }
 const game = initGame()
-playRound(game)
 
-// export function gameLoop() {
+
+// export function gameLoop(game) {
 //     while (isNotEmty(p1.hand, p1.wonPile) || isNotEmty(p2.hand, p2.wonPile)) {
-//         break
+//         playRound(game)
 //     }
 // }
+ 
+
+
+// TODO:  needs to fix extra insertion when double war happend
